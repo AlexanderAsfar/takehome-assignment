@@ -71,7 +71,17 @@ def get_show(id):
     sh=db.getById('shows', int(id))
     return create_response(sh)
 
-    
+@app.route("/shows", methods=['POST'])   
+def create_show():
+    na=request.form['name']
+    ep=request.form['episode_seen']
+    if na=="" or ep=="":
+        return create_response(status=422, 
+        message="The name and/or the number of episode seen were not provided. Make sure both parameters has a value.")
+    s={"name":na, "episode_seen":ep}
+    db.create("shows", s)
+    return create_response(s, status=201)
+
 
 
 """
