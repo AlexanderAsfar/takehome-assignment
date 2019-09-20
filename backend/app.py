@@ -74,7 +74,7 @@ def get_show(id):
 @app.route("/shows", methods=['POST'])   
 def create_show():
     na=request.form['name']
-    ep=request.form['episode_seen']
+    ep=request.form['episodes_seen']
     if na=="" or ep=="":
         return create_response(status=422, 
         message="The name and/or the number of episode seen were not provided. Make sure both parameters has a value.")
@@ -82,6 +82,18 @@ def create_show():
     db.create("shows", s)
     return create_response(s, status=201)
 
+@app.route("/shows/<id>", methods=['PUT'])
+def update_show(id):
+    if db.getById('shows', int(id)) is None:
+        return create_response(status=404, message="No show with this id exists")
+    na=request.form['name']
+    if na is not "":
+        db.updateById("shows", int(id), {"name":na})
+    ep=request.form['episodes_seen']   
+    if ep is not "":
+        db.updateById("shows", int(id), {"episodes_seen":ep})
+    sh=db.getById('shows', int(id))
+    return create_response(sh)     
 
 
 """
