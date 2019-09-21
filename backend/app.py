@@ -53,7 +53,12 @@ def mirror(name):
 
 @app.route("/shows", methods=['GET'])
 def get_all_shows():
-    return create_response({"shows": db.get('shows')})
+    show_list= []
+    minep = request.args.get('minEpisodes')
+    for show in db.get('shows'):
+        if show['episodes_seen'] >= int(minep):
+            show_list.append(show)
+    return create_response({"shows": show_list })
 
 @app.route("/shows/<id>", methods=['DELETE'])
 def delete_show(id):
