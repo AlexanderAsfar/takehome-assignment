@@ -1,7 +1,7 @@
 <template>
   <!-- PART 4: Add your code here -->
   <div>
-    {{name}} <counter v-bind:init_count="episodes_seen"/>
+    {{name}} <counter v-bind:init_count="this.episodes_seen"/>
   </div>
 </template>
 
